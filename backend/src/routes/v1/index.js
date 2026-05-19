@@ -27,4 +27,5 @@ router.delete("/review/:flightId", reviewController.destroyReview);
 router.post("/booking", bookingController.createBooking);
 router.get("/booking/:id/boardingPass", bookingController.getBoardingPass);
 router.delete("/booking/:id", bookingController.cancelBooking);
+router.get("/booking", bookingController.getUserBookings);
 module.exports = router;
