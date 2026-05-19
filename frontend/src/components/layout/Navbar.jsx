@@ -33,7 +33,7 @@ export default function Navbar() {
                     ) : (
                         <>
                             <Link to="/login" className="inline-flex items-center justify-center rounded-lg text-sm font-medium px-2.5 h-7 hover:bg-muted transition-colors">Sign in</Link>
-                            <Button size="sm" render={<Link to="/register" />}>Get started</Button>
+                            <Button size="sm" nativeButton={false} render={<Link to="/register" />}>Get started</Button>
                         </>
                     )}
                     <DropdownMenu>
