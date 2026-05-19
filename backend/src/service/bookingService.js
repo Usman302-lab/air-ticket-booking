@@ -14,9 +14,14 @@ const createBooking = async (data) => {
     }
 };
 
-const cancelBooking = async (id) => {
+const cancelBooking = async (id, userId) => {
     try {
-        return await Booking.findOneAndUpdate({ id: id }, { status: 'cancelled' });
+        const response = await Booking.findOneAndUpdate(
+            { id: id, user: userId },
+            { status: 'cancelled' },
+            { new: true }
+        );
+        return response;
     } catch (err) {
         console.log(err);
     }

@@ -17,7 +17,11 @@ Respond only with valid JSON. No markdown fences, no extra text.`;
 
     const result = await model.generateContent(prompt);
     const text = result.response.text().trim().replace(/^```json\s*|\s*```$/g, '');
-    return JSON.parse(text);
+    try {
+        return JSON.parse(text);
+    } catch {
+        throw new Error('AI returned invalid JSON response');
+    }
 };
 
 const getTravelRecommendations = async (destination, departureDate) => {
@@ -32,7 +36,11 @@ Respond ONLY with valid JSON, no markdown fences:
 
     const result = await model.generateContent(prompt);
     const text = result.response.text().trim().replace(/^```json\s*|\s*```$/g, '');
-    return JSON.parse(text);
+    try {
+        return JSON.parse(text);
+    } catch {
+        throw new Error('AI returned invalid JSON response');
+    }
 };
 
 const getPricingInsights = async (flights) => {
@@ -54,7 +62,11 @@ Verdict must be exactly one of: "Book Now", "Good Deal", "Wait if Flexible"`;
 
     const result = await model.generateContent(prompt);
     const text = result.response.text().trim().replace(/^```json\s*|\s*```$/g, '');
-    return JSON.parse(text);
+    try {
+        return JSON.parse(text);
+    } catch {
+        throw new Error('AI returned invalid JSON response');
+    }
 };
 
 module.exports = { chatWithAssistant, getTravelRecommendations, getPricingInsights };

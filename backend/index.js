@@ -21,7 +21,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/auth', authRouter);
 app.use('/api', passport.authenticate('jwt', { session: false }), apiRouter);
 
-app.listen(PORT, async () => {
-    await connect();
-    console.log(`Server running on port ${PORT}`);
-});
+connect()
+    .then(() => {
+        app.listen(PORT, () => {
+            console.log(`Server running on port ${PORT}`);
+        });
+    })
+    .catch(err => {
+        console.error('Database connection failed:', err);
+        process.exit(1);
+    });

@@ -19,10 +19,10 @@ const bookingSchema = new mongoose.Schema({
     status: { // "booked", "cancelled", "in process"
         type: String,
         required: true,
-        default: "In process",
+        default: "in process",
         enum: ["booked", "cancelled", "in process"]
     }
-}, {timeStamps: true});
+}, {timestamps: true});
 
 const bookingModel = new mongoose.model('Booking', bookingSchema);
 
