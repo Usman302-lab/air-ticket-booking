@@ -6,6 +6,7 @@ const airlineController = require("../../controllers/airlineController");
 const flightController = require("../../controllers/flightController");
 const reviewController = require("../../controllers/reviewController");
 const bookingController = require("../../controllers/bookingController");
+const aiController = require('../../controllers/aiController');
 
 router.get("/help", helpController.helpDetails);
 router.post("/airline", airlineController.createAirline);
@@ -28,4 +29,8 @@ router.post("/booking", bookingController.createBooking);
 router.get("/booking/:id/boardingPass", bookingController.getBoardingPass);
 router.delete("/booking/:id", bookingController.cancelBooking);
 router.get("/booking", bookingController.getUserBookings);
+
+router.post('/ai/chat', aiController.chat);
+router.post('/ai/recommendations', aiController.recommendations);
+router.post('/ai/pricing-insight', aiController.pricingInsight);
 module.exports = router;
