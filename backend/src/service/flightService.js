@@ -48,38 +48,20 @@ const getFlight = async (flightNumber) => {
 
 const getAllFlights = async (data) => {
     try {
-        let response;
-        if(data.sort) {
-            if(data.price) {
-                if(data.sort == 'inc')
-                    response = await Flight.find().sort('price');
-                else   
-                    response = await Flight.find().sort('-price');
-            } else if(data.duration) {
-                if(data.sort == 'inc')
-                    response = await Flight.find().sort('duration');
-                else   
-                    response = await Flight.find().sort('-duration');
-            }  else {
-                response = await Flight.find();
-            }
-        } else if(data.filter) {
-            if(data.price) {
-                if(data.filter == 'lt')
-                    response = await Flight.find({price: {$lt: data.price}});
-                else   
-                    response = await Flight.find({price: {$gt: data.price}});
-            } else if(data.duration) {
-                if(data.filter == 'lt')
-                    response = await Flight.find({duration: {$lt: data.duration}})
-                else   
-                    response = await Flight.find({duration: {$gt: data.duration}});
-            }  else {
-                response = await Flight.find();
-            }
-        }
-        return response;
-    } catch(err) {
+        const query = {};
+        if (data.departureAirport) query.departureAirport = new RegExp(data.departureAirport, 'i');
+        if (data.arrivalAirport) query.arrivalAirport = new RegExp(data.arrivalAirport, 'i');
+        if (data.maxPrice) query.price = { $lte: Number(data.maxPrice) };
+
+        let dbQuery = Flight.find(query);
+
+        if (data.sort === 'price_asc') dbQuery = dbQuery.sort('price');
+        else if (data.sort === 'price_desc') dbQuery = dbQuery.sort('-price');
+        else if (data.sort === 'duration_asc') dbQuery = dbQuery.sort('duration');
+        else if (data.sort === 'duration_desc') dbQuery = dbQuery.sort('-duration');
+
+        return await dbQuery.populate('airline').exec();
+    } catch (err) {
         console.log(err);
     }
 }
